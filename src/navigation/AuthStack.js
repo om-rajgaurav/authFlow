@@ -29,7 +29,9 @@ const AuthStack = () => {
   }
 
   return (
-    <Stack.Navigator initialRouteName={routeName}>
+    <Stack.Navigator
+      initialRouteName={routeName}
+      screenOptions={{headerShown: false}}>
       <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Onboarding" component={OnBoardingScreen} />

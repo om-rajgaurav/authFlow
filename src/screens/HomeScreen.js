@@ -1,10 +1,18 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Button, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {useDispatch} from 'react-redux';
+import {logout} from '../redux/actions';
 
 const HomeScreen = () => {
+  const dispatch = useDispatch();
+
+  const logOutHandler = () => {
+    dispatch(logout(null));
+  };
+
   return (
     <View style={styles.container}>
-      <Text>HomeScreen</Text>
+      <Button title="Logout" onPress={logOutHandler} />
     </View>
   );
 };
