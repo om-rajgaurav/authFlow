@@ -1,4 +1,4 @@
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {Button, StyleSheet, View} from 'react-native';
 import React from 'react';
 import {useDispatch} from 'react-redux';
 import {logout} from '../redux/actions';
@@ -24,6 +24,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#399af5',
+    backgroundColor: '#5aa3e7',
   },
 });

@@ -1,6 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {LoginScreen, SplashScreen, OnBoardingScreen} from '../screens';
+import {
+  LoginScreen,
+  SplashScreen,
+  RegisterScreen,
+  OnBoardingScreen,
+} from '../screens';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
@@ -35,6 +40,7 @@ const AuthStack = () => {
       <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Onboarding" component={OnBoardingScreen} />
+      <Stack.Screen name="Register" component={RegisterScreen} />
     </Stack.Navigator>
   );
 };

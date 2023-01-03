@@ -1,7 +1,7 @@
 import {Types} from './types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const {LOG_IN, LOG_OUT} = Types;
+const {LOG_IN, LOG_OUT, REGISTER} = Types;
 
 export const Initial = () => {
   return async dispatch => {
@@ -15,6 +15,7 @@ export const Initial = () => {
     }
   };
 };
+
 export const login = (userName, password) => {
   return async dispatch => {
     const token = userName + password;
@@ -37,6 +38,17 @@ export const logout = value => {
     dispatch({
       type: LOG_OUT,
       payload: value,
+    });
+  };
+};
+
+export const register = (Name, email, mobile, password, imagePath) => {
+  return async dispatch => {
+    const tokenResponse = Name + email + mobile + password + imagePath;
+    await AsyncStorage.setItem('token', tokenResponse);
+    dispatch({
+      type: REGISTER,
+      payload: tokenResponse,
     });
   };
 };

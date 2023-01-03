@@ -1,6 +1,6 @@
 import {Types} from './types';
 
-const {LOG_IN, LOG_OUT} = Types;
+const {LOG_IN, LOG_OUT, REGISTER} = Types;
 
 const initialState = {
   authToken: null,
@@ -16,6 +16,11 @@ export default (state = initialState, action) => {
       };
     case LOG_OUT:
       return {
+        authToken: action.payload,
+      };
+    case REGISTER:
+      return {
+        ...state,
         authToken: action.payload,
       };
     default:

@@ -11,25 +11,26 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import Loader from '../component/Loader';
 import {useDispatch} from 'react-redux';
 import {login} from '../redux/actions';
+import {Utility} from '../Utility/Index';
 
 const LoginScreen = ({navigation}) => {
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
+  const [EmailError, setEmailError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [errortext, setErrortext] = useState('');
 
   const passwordInputRef = createRef();
 
   const dispatch = useDispatch();
 
   const handleSubmitPress = () => {
+    
     dispatch(login(userEmail, userPassword));
   };
+
 
   return (
     <View style={styles.mainBody}>
@@ -57,19 +58,36 @@ const LoginScreen = ({navigation}) => {
             <View style={styles.SectionStyle}>
               <TextInput
                 style={styles.inputStyle}
-                onChangeText={UserEmail => setUserEmail(UserEmail)}
+                onChangeText={UserEmail => {
+                  setUserEmail(UserEmail.trim());
+                  if (Utility.email_validation(UserEmail)) {
+                    setEmailError(false);
+                  } else {
+                    setEmailError(true);
+                  }
+                }}
                 placeholder="Enter Email" //dummy@abc.com
-                placeholderTextColor="#8b9cb5"
+                placeholderTextColor="#e7e8ea"
                 autoCapitalize="none"
+                autoCorrect={false}
                 keyboardType="email-address"
                 returnKeyType="next"
-                onSubmitEditing={() =>
-                  passwordInputRef.current && passwordInputRef.current.focus()
-                }
-                underlineColorAndroid="#f000"
+                // onSubmitEditing={() =>
+                //   passwordInputRef.current && passwordInputRef.current.focus()
+                // }
+                underlineColorAndroid="#9e1a1a00"
                 blurOnSubmit={false}
               />
             </View>
+            {EmailError && (
+              <View style={styles.errorTextView}>
+                <Text style={styles.errorText}>
+                  {userEmail == ''
+                    ? 'email is mandatory field'
+                    : 'please Enter a valid email'}
+                </Text>
+              </View>
+            )}
             <View style={styles.SectionStyle}>
               <TextInput
                 style={styles.inputStyle}
@@ -85,9 +103,7 @@ const LoginScreen = ({navigation}) => {
                 returnKeyType="next"
               />
             </View>
-            {errortext != '' ? (
-              <Text style={styles.errorTextStyle}> {errortext} </Text>
-            ) : null}
+
             <TouchableOpacity
               style={styles.buttonStyle}
               activeOpacity={0.5}
@@ -96,7 +112,7 @@ const LoginScreen = ({navigation}) => {
             </TouchableOpacity>
             <Text
               style={styles.registerTextStyle}
-              onPress={() => navigation.navigate('RegisterScreen')}>
+              onPress={() => navigation.navigate('Register')}>
               New Here ? Register
             </Text>
           </KeyboardAvoidingView>
@@ -121,6 +137,14 @@ const styles = StyleSheet.create({
     marginLeft: 35,
     marginRight: 35,
     margin: 10,
+  },
+  errorTextView: {
+    marginLeft: 50,
+    marginTop: -6,
+  },
+  errorText: {
+    fontSize: 14,
+    color: 'red',
   },
   buttonStyle: {
     backgroundColor: '#7DE24E',
